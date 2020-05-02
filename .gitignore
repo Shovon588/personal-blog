@@ -1,0 +1,8 @@
+
+blogenv/
+
+my_blog/blog/__pycache__/
+
+my_blog/blog/migrations/
+
+.idea/

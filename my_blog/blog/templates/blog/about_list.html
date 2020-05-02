@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% block title_block %}About{% endblock %}
+
+{% block content %}
+<div class="jumbotron mt-5">
+  {% for about in about_list %}
+    <p class="text-center postcontent">{{about.about}}</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

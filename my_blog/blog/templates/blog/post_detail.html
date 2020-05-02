@@ -1,0 +1,90 @@
+{% extends 'blog/base.html' %}
+{%block title_block %}{{post.title}}{% endblock %}
+
+{% block content %}
+{% if messages %}
+  {% for msg in messages %}
+  <div class="alert alert-success text-center">
+    {{msg}}
+  </div>
+  {% endfor %}
+{% endif %}
+
+  <h1 class="posttitle loader mt-5">{{ post.title|safe|linebreaksbr }}</h1>
+  {% if post.published_date %}
+    <p class="text-center">{{ post.published_date }}</p>
+    <p class="text-center">Posted by: {{post.author}}</p>
+
+    {% if user.is_authenticated %}
+    <div class="text-center">
+      <a class="btn btn-primary" href="{% url 'post_edit' post.pk%}">
+        <i class="fas fa-pencil-alt"></i>
+      </a>
+      <a class="btn btn-danger" href="{% url 'post_remove' post.pk%}">
+        <span class="fas fa-trash"></span>
+      </a>
+    </div>
+    {% endif %}
+
+  {% else %}
+    <div class="text-center">
+      <a class="btn btn-primary" href="{% url 'post_edit' post.pk%}">
+        <i class="fas fa-pencil-alt"></i>
+      </a>
+
+      <a class="btn btn-success" href="{% url 'post_publish' post.pk%}">Publish</a>
+
+      <a class="btn btn-danger" href="{% url 'post_remove' post.pk%}">
+        <span class="fas fa-trash"></span>
+      </a>
+    </div>
+  {% endif %}
+
+  <hr>
+  <p class="text-justify postcontent">{{post.text|safe|linebreaksbr}}</p>
+
+  <br><br>
+  <div class="panel panel-info mb-5">
+    <div class="panel-heading p-3 text-center" style="background: #e5e7e8">
+        Comment panel
+    </div>
+
+    <div class="panel-body p-3" style="border: 2px solid #e5e7e8">
+      <form action="{% url 'add_comment_to_post' post.pk %}" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Name:</span>
+          </div>
+          <input type="text" class="form-control" style="min-height: 50px;" name='author' required>
+        </div>
+        <textarea class="editable" rows="2" placeholder="Write your comment here..." name='text' required></textarea>
+
+        <input type="submit" class="btn btn-primary float-right mt-2" value="Comment">
+      </form>
+
+      <br>
+      <br>
+
+      {% for comment in post.comments.all %}
+      <hr>
+        {% if user.is_authenticated or comment.approved_comment %}
+          {% if not comment.approved_comment %}
+            <a class="btn btn-primary float-right" href="{% url 'comment_approve' comment.pk%}">
+              <span class="fas fa-check"></span>
+            </a>
+            <a class="btn btn-danger float-right mr-2" href="{% url 'comment_remove' comment.pk%}">
+              <span class="fas fa-times"></span>
+            </a>
+          {% endif %}
+          <div class="media-body">
+              <strong class="text-success">Author: {{comment.author}}</strong>
+                <p>{{comment.text|safe|linebreaksbr}}</p>
+                <p class="text-muted">Date: {{comment.created_date}}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}

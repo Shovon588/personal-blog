@@ -1,0 +1,39 @@
+.techfont {
+  font-family: 'Russo One', sans-serif;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.posttitle {
+  font-family: 'Russo One', sans-serif;
+  font-size: 2em;
+  text-align: center;
+}
+
+.postcontent {
+  font-family: 'Montserrat';
+  font-size: 1.3em;
+}
+
+
+.editable{
+  text-align: justify;
+  font-size: 1.5em;
+  min-height: 50px;
+  width: 100%;
+  padding: 8px;
+  /* position: relative; */
+  border: 1px solid rgba(143, 143, 143, 0.5);
+}
+
+#id_username,#id_password{
+  display: block;
+  width: 75%;
+  height: 50px;
+  border: none;
+  text-align: center;
+  padding: 3%;
+  font-size: 20px;
+  background-color: #ffffff;
+  border: solid 1px rgba(0, 0, 0, 0.12);
+}
