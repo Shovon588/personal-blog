@@ -1,0 +1,60 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class="card my-5">
+  <div class="card-header">
+  <a class="text-center posttitle">How to change your username?</a>
+  </div>
+  <div class="card-body" style="font-size: 17px">
+    <p class="text-justify postcontent">1. Go to <a href="{% url 'admin:index' %}">admin.</a></p>
+    <p class="text-justify postcontent">2. Under AUTHENTICATION AND AUTHORIZATION tab click on Users.</p>
+    <p class="text-justify postcontent">3. There shold be one your username, click on that.</p>
+    <p class="text-justify postcontent">4. In this page you can see Username under Change user tab.</p>
+    <p class="text-justify postcontent">5. Change your username and click on save.</p>
+    <p class="text-justify postcontent">6. Your username will be updated.</p>
+  </div>
+</div>
+
+<div class="card my-5">
+  <div class="card-header">
+  <a class="text-center posttitle">How to change your password?</a>
+  </div>
+  <div class="card-body" style="font-size: 17px">
+    <p class="text-justify postcontent">1. Go to <a href="{% url 'admin:index' %}">admin.</a></p>
+    <p class="text-justify postcontent">2. Under AUTHENTICATION AND AUTHORIZATION tab click on Users.</p>
+    <p class="text-justify postcontent">3. There shold be one your username, click on that.</p>
+    <p class="text-justify postcontent">4. In this page you can see Password under Change user tab.</p>
+    <p class="text-justify postcontent">5. There you can see something like this <u>"Raw passwords are not stored, so there is no way to see this user’s password, but you can change the password using <b>this form.</b>"</u></p>
+    <p class="text-justify postcontent">6. Click on <b>this form</b>, change password and save.</p>
+  </div>
+</div>
+
+<div class="card my-5">
+  <div class="card-header">
+  <a class="text-center posttitle">How to add new user?</a>
+  </div>
+  <div class="card-body" style="font-size: 17px">
+    <p class="text-justify postcontent">If you want to add multiple user in your blog you can do that too. Suppose you want to allow another user to post on your blog then you can add an user and give the credentials to them.</p>
+    <p class="text-justify postcontent">1. Go to <a href="{% url 'admin:index' %}">admin.</a></p>
+    <p class="text-justify postcontent">2. Under AUTHENTICATION AND AUTHORIZATION tab click on Users.</p>
+    <p class="text-justify postcontent">3. Click on ADD USER.</p>
+    <p class="text-justify postcontent">4. Setup the username and password and click save.</p>
+    <p class="text-justify postcontent">5. This will add a new user.</p>
+  </div>
+</div>
+
+
+<div class="card my-5">
+  <div class="card-header">
+  <a class="text-center posttitle">How to change content in about page?</a>
+  </div>
+  <div class="card-body" style="font-size: 17px">
+    <p class="text-justify postcontent">1. Go to <a href="{% url 'admin:index' %}">admin.</a></p>
+    <p class="text-justify postcontent">2. Under BLOG tab click on Abouts.</p>
+    <p class="text-justify postcontent">3. There should be only one item which is you current about. Click on it.</p>
+    <p class="text-justify postcontent">4. Change or modify this and click save.</p>
+    <p class="text-justify postcontent">5. Your about will be updated.</p>
+  </div>
+</div>
+{% endblock %}

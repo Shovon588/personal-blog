@@ -7,14 +7,16 @@
 .posttitle {
   font-family: 'Russo One', sans-serif;
   font-size: 2em;
-  text-align: center;
 }
 
 .postcontent {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat Alternates';
   font-size: 1.3em;
 }
 
+.big-brand{
+  font-family: 'Pacifico', cursive;
+}
 
 .editable{
   text-align: justify;

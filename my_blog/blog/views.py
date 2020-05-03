@@ -90,13 +90,10 @@ def draft_detail_view(request, pk):
     post = Post.objects.filter(pk=pk)[0]
     return render(request, 'blog/draft_detail.html', context={'post':post})
 
-# class DraftListView(LoginRequiredMixin, ListView):
-#     login_url = '/login/'
-#     redirect_field_name = 'blog/post_draft_list.html'
-#     model = Post
-#
-#     def get_queryset(self):
-#         return Post.objects.filter(published_date__isnull=True).order_by('create_date')
+
+class InstructionsView(TemplateView):
+    template_name = 'blog/instructions.html'
+
 
 ###############################################################
 ###############################################################

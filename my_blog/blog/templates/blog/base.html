@@ -15,8 +15,7 @@
   <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 
   {# Fonts#}
-  <link href="https://fonts.googleapis.com/css?family=Montserrat|Russo+One" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital@1&family=Pacifico&family=Russo+One&display=swap" rel="stylesheet">
 
 <body class='loader'>
 
@@ -26,7 +25,7 @@
 
     <div class="col-md-8">
       <nav class="navbar navbar-expand-lg navbar-light bg-light techfont custom-navbar">
-        <a style="font-size:30px" class="navbar-brand" href="{% url 'post_list' %}">My Tech Blog</a>
+        <a style="font-size:30px" class="navbar-brand big-brand" href="{% url 'post_list' %}">WordsWithMeraki</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -45,6 +44,8 @@
                   <a class="nav-item nav-link active" href="{% url 'post_new' %}">New Post</a>
                   <a class="nav-item nav-link active" href="{% url 'post_draft_list' %}">Drafts</a>
                   <div class="dropdown-divider"></div>
+                  <a class="nav-item nav-link active" href="{% url 'instructions' %}">Instructios</a>
+                  <a class="nav-item nav-link active" href="{% url 'admin:index' %}">Admin</a>
                   <a class="nav-item nav-link active" href="{% url 'logout' %}">Log out</a>
                 </div>
               </li>
