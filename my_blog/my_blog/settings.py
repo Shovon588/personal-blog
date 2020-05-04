@@ -26,7 +26,7 @@ SECRET_KEY = '_+&-p@_c9y68-p!al==rv+ylfsg7qgwq9z@$=d0+!jx-g%!((q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['wordswithmeraki.pythonanywhere.com']
 
 
 # Application definition
