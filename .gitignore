@@ -3,6 +3,6 @@ blogenv/
 
 my_blog/blog/__pycache__/
 
-my_blog/blog/migrations/
+db.sqlite3
 
 .idea/
