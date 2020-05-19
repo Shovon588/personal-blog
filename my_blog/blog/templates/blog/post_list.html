@@ -14,7 +14,7 @@
   {% for post in post_list %}
     <div class="card my-5">
       <div class="card-header">
-        <a class="text-center posttitle" href="{% url 'post_detail' post.pk %}">{{post.title}}</a>
+        <a class="posttitle" href="{% url 'post_detail' post.pk %}">{{post.title}}</a>
       </div>
       <div class="card-body" style="font-size: 17px">
         <p class="text-justify postcontent">{{post.text|safe|linebreaksbr|truncatechars:160}}</p>

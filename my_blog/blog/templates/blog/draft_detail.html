@@ -10,7 +10,7 @@
   {% endfor %}
 {% endif %}
 
-  <h1 class="posttitle loader mt-5">{{ post.title|safe|linebreaksbr }}</h1>
+  <h1 class="posttitle mt-5">{{ post.title|safe|linebreaksbr }}</h1>
   {% if post.published_date %}
     <p class="text-center">{{ post.published_date }}</p>
     <p class="text-center">Posted by: {{post.author}}</p>
