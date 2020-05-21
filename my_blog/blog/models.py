@@ -5,11 +5,18 @@ from django.urls import reverse
 # Create your models here.
 
 
-class Post(models.Model):
+class Story(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    story = models.CharField(max_length=256)
+    story_trailer = models.CharField(max_length=512, blank=True, null=True)
+    create_date = models.DateTimeField(default=timezone.now)
+
+
+class Post(models.Model):
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
-    create_date = models.DateTimeField(default=timezone.now())
+    create_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(null=True, blank=True)
 
     def publish(self):
@@ -30,7 +37,7 @@ class Comment(models.Model):
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
     author = models.CharField(max_length=150)
     text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now())
+    created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
 
     def approve(self):
