@@ -3,6 +3,4 @@ blogenv/
 
 my_blog/blog/__pycache__/
 
-db.sqlite3
-
 .idea/
