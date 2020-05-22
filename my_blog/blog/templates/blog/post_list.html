@@ -15,12 +15,13 @@
     <div class="card my-5">
       <div class="card-header">
         <a class="posttitle" href="{% url 'post_detail' post.pk %}">{{post.title}}</a>
+        <a class="float-right" href="{% url 'story_parts' post.story.pk%}">{{post.story.story_name}}</a>
       </div>
       <div class="card-body" style="font-size: 17px">
         <p class="text-justify postcontent">{{post.text|safe|linebreaksbr|truncatechars:160}}</p>
       </div>
       <div class="card-footer date">
-        <p class="text-muted">Posted by: {{post.author}}
+        <p class="text-muted">Posted: {{post.published_date|date:'d-M, Y'}}, Author: {{post.story.author}}
           {% if post.comments.all %}
           <span class="float-right">
             <a href="{% url 'post_detail' post.pk %}">{{ post.comments.count }} comments</a>
@@ -31,6 +32,5 @@
     </div>
   {% endfor %}
 </div>
-
 
 {% endblock %}

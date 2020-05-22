@@ -16,17 +16,13 @@
     <div class="card my-5">
       <div class="card-header">
         <a class="text-center posttitle" href="{% url 'draft_detail' post.pk %}">{{post.title}}</a>
+        <a class="float-right" href="{% url 'story_parts' post.story.pk%}">{{post.story.story_name}}</a>
       </div>
       <div class="card-body" style="font-size: 17px">
         <p class="text-justify postcontent">{{post.text|safe|linebreaksbr|truncatechars:160}}</p>
       </div>
       <div class="card-footer date">
-        <p class="text-muted">Posted by: {{post.author}}
-          {% if post.comments.all %}
-          <span class="float-right">
-            <a href="{% url 'draft_detail' post.pk %}">{{ post.comments.count }} comments</a>
-          </span>
-          {% endif %}
+        <p class="text-muted">Created on: {{post.create_date|date:'d-M, Y'}}
         </p>
       </div>
     </div>

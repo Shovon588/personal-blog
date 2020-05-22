@@ -11,34 +11,23 @@
 {% endif %}
 
   <h1 class="posttitle mt-5">{{ post.title|safe|linebreaksbr }}</h1>
-  {% if post.published_date %}
-    <p class="text-center">{{ post.published_date }}</p>
-    <p class="text-center">Posted by: {{post.author}}</p>
+  <p class="text-center">{{ post.create_date }}</p>
+
 
     {% if user.is_authenticated %}
-    <div class="text-center">
-      <a class="btn btn-primary" href="{% url 'post_edit' post.pk%}">
-        <i class="fas fa-pencil-alt"></i>
-      </a>
-      <a class="btn btn-danger" href="{% url 'post_remove' post.pk%}">
-        <span class="fas fa-trash"></span>
-      </a>
-    </div>
+      <div class="text-center">
+        <a class="btn btn-primary" href="{% url 'post_edit' post.pk%}">
+          <i class="fas fa-pencil-alt"></i>
+        </a>
+
+        <a class="btn btn-success" href="{% url 'post_publish' post.pk%}">Publish</a>
+
+        <a class="btn btn-danger" href="{% url 'post_remove' post.pk%}">
+          <span class="fas fa-trash"></span>
+        </a>
+      </div>
     {% endif %}
 
-  {% else %}
-    <div class="text-center">
-      <a class="btn btn-primary" href="{% url 'post_edit' post.pk%}">
-        <i class="fas fa-pencil-alt"></i>
-      </a>
-
-      <a class="btn btn-success" href="{% url 'post_publish' post.pk%}">Publish</a>
-
-      <a class="btn btn-danger" href="{% url 'post_remove' post.pk%}">
-        <span class="fas fa-trash"></span>
-      </a>
-    </div>
-  {% endif %}
 
   <hr>
   <p class="text-justify postcontent">{{post.text|safe|linebreaksbr}}</p>
