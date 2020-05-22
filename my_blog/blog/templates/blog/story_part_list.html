@@ -1,0 +1,68 @@
+{% extends 'blog/base.html' %}
+{%block title_block%}Homepage{% endblock %}
+
+{% block content %}
+{% if messages %}
+  {% for msg in messages %}
+  <div class="alert alert-danger text-center">
+    {{msg}}
+  </div>
+  {% endfor %}
+{% endif %}
+
+<h1 class="text-center">{{story_name}}</h1>
+<a class="float-right" href="{% url 'post_new' pk %}">Write a new post...</a>
+<div class="centerstage">
+  {% for post in story_parts %}
+    {% if user.is_authenticated %}
+      <div class="card my-5">
+        <div class="card-header">
+          <a class="posttitle" href="{% url 'post_detail' post.pk %}">{{post.title}}</a>
+          {% if not post.published_date %}
+            <a class="float-right" style="font-size: 20px" href="{% url 'draft_detail' post.pk%}">Publish</a>
+          {% endif %}
+        </div>
+        <div class="card-body" style="font-size: 17px">
+          <p class="text-justify postcontent">{{post.text|safe|linebreaksbr|truncatechars:160}}</p>
+        </div>
+        <div class="card-footer date">
+          {% if post.published_date %}
+            <p class="text-muted">Posted: {{post.published_date|date:'d-M, Y'}}, Author: {{post.story.author}}
+          {% else %}
+            <p class="text-muted">Created: {{post.create_date|date:'d-M, Y'}}, Author: {{post.story.author}}
+          {% endif %}
+
+            {% if post.comments.all %}
+            <span class="float-right">
+              <a href="{% url 'post_detail' post.pk %}">{{ post.comments.count }} comments</a>
+            </span>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    {% else %}
+      {% if post.published_date %}
+      <div class="card my-5">
+        <div class="card-header">
+          <a class="posttitle" href="{% url 'post_detail' post.pk %}">{{post.title}}</a>
+        </div>
+        <div class="card-body" style="font-size: 17px">
+          <p class="text-justify postcontent">{{post.text|safe|linebreaksbr|truncatechars:160}}</p>
+        </div>
+        <div class="card-footer date">
+          <p class="text-muted">Created: {{post.create_date|date:'d-M, Y'}}, Author: {{post.story.author}}
+            {% if post.comments.all %}
+            <span class="float-right">
+              <a href="{% url 'post_detail' post.pk %}">{{ post.comments.count }} comments</a>
+            </span>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+</div>
+
+
+{% endblock %}
