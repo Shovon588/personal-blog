@@ -9,7 +9,7 @@ from django.views.generic import TemplateView, ListView, DetailView,\
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Post, Comment, About
+from .models import Post, Comment, About, Story
 
 # Create your views here.
 
@@ -33,7 +33,7 @@ class PostDetailView(DetailView):
 
 
 @login_required
-def create_post(request):
+def create_post(request, pk):
     author = request.user
     if request.method=='POST':
         title = request.POST['title']
@@ -44,13 +44,6 @@ def create_post(request):
         return redirect('post_draft_list')
 
     return render(request, 'blog/post_form.html')
-
-
-# class CreatePostView(LoginRequiredMixin, CreateView):
-#     login_url = '/login/'
-#     redirect_field_name = 'blog/post_detail.html'
-#     form_class = PostForm
-#     model = Post
 
 
 @login_required
@@ -68,12 +61,22 @@ def post_update_view(request, pk):
     return render(request, 'blog/post_edit.html', context={'post':post})
 
 
-# class PostUpdateView(LoginRequiredMixin, UpdateView):
-#     login_url = '/login/'
-#     redirect_field_name = 'blog/post_detail.html'
-#     form_class = PostForm
-#     model = Post
+# =====================Story=============================
+class StoryListView(ListView):
+    model = Story
+    context_object_name = 'stories'
 
+
+def story_part_list_view(request, pk):
+    story = Story.objects.get(pk=pk)
+    story_parts = Post.objects.filter(story=story).order_by('-create_date')
+    story_name = story.story_name
+
+    return render(request, 'blog/story_part_list.html', context={'story_parts':story_parts,
+                                                                 'story_name': story_name,
+                                                                 'pk':pk})
+
+# =====================End Story=============================
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
