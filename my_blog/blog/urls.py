@@ -17,4 +17,7 @@ urlpatterns = [
     path('instructions/', views.InstructionsView.as_view(), name='instructions'),
     path('stories/', views.StoryListView.as_view(), name='stories'),
     path('story_parts/<int:pk>/', views.story_part_list_view, name='story_parts'),
+    path('new_story/', views.create_new_story, name='new_story'),
+    path('delete_story/<int:pk>/', views.StoryDeleteView.as_view(), name='delete_story'),
+    path('update_story/<int:pk>/', views.story_update_view, name='update_story'),
 ]
