@@ -4,3 +4,5 @@ blogenv/
 my_blog/blog/__pycache__/
 
 .idea/
+
+my_blog/my_blog/__pycache__/
