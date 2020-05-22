@@ -7,9 +7,12 @@ from django.urls import reverse
 
 class Story(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    story = models.CharField(max_length=256)
-    story_trailer = models.CharField(max_length=512, blank=True, null=True)
+    story_name = models.CharField(max_length=256)
+    story_trailer = models.TextField(blank=True)
     create_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.story_name
 
 
 class Post(models.Model):
@@ -31,6 +34,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
 
 
 class Comment(models.Model):
