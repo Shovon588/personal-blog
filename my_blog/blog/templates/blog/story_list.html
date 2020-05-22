@@ -2,12 +2,26 @@
 {%block title_block%}Stories{% endblock %}
 
 {% block content %}
-<div class="row">
+
+{% if user.is_authenticated %}
+<div class="alert alert-primary text-center">
+  Add a new story or write to an existing one.
+</div>
+<a class="float-right text-success" href="{% url 'new_story' %}">Add a new story...</a><br><br>
+{% endif %}
+
+
+<div class="row text-center">
   {% for story in stories %}
-    <div class="card-body active-cases text border border-dark mx-2 my-2">
-      <a class="card-title" style="font-size:25px" href="{% url 'post_new' story.pk %}">{{story.story_name}}</a>
-    </div>
+      {% ifequal forloop.counter|divisibleby:"2" True %}
+        <div class="card-body active-cases mx-2 my-2" style="background-color: #a1c91c; border-radius: 20px;">
+          <a class="card-title text-dark" style="font-size:25px" href="{% url 'story_parts' story.pk %}">{{story.story_name}}</a>
+        </div>
+      {% else %}
+        <div class="card-body active-cases mx-2 my-2" style="background-color: #0b66b0; border-radius: 20px;">
+          <a class="card-title text-light" style="font-size:25px" href="{% url 'story_parts' story.pk %}">{{story.story_name}}</a>
+        </div>
+      {% endifequal %}
   {% endfor %}
 </div>
-
 {% endblock %}

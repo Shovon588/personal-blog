@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1 class="text-center mt-5">Create a new post!</h1>
+<h3 class="text-center mt-5">Create a new post for <span><a href="{% url 'story_parts' pk %}">{{story_name}}</a></span></h3>
 
 <form method="post" class="mt-5">
   {% csrf_token %}

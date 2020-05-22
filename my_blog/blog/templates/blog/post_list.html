@@ -21,7 +21,7 @@
         <p class="text-justify postcontent">{{post.text|safe|linebreaksbr|truncatechars:160}}</p>
       </div>
       <div class="card-footer date">
-        <p class="text-muted">Posted: {{post.published_date|date:'d-M, Y'}}, Author: {{post.story.author}}
+        <p class="text-muted">Posted: {{post.published_date|date:'d-M, Y'}}
           {% if post.comments.all %}
           <span class="float-right">
             <a href="{% url 'post_detail' post.pk %}">{{ post.comments.count }} comments</a>
