@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{%block title_block%}New Post{% endblock %}
+
+{% block content %}
+
+<h3 class="mt-4">Create a new story.</h3>
+<form method="post" class="mt-5">
+  {% csrf_token %}
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Story name</span>
+    </div>
+    <input type="text" class="form-control posttitle" style="min-height: 50px;" name='name' required>
+  </div>
+  <textarea class="editable postcontent"  rows="7" placeholder="Write something about your story here..." name='trailer'></textarea>
+
+  <center><input type="submit" class="btn btn-primary mt-2" value="Create new story"></center>
+</form>
+
+
+{% endblock %}
