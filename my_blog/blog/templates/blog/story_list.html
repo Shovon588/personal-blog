@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+{%block title_block%}Stories{% endblock %}
+
+{% block content %}
+<div class="row">
+  {% for story in stories %}
+    <div class="card-body active-cases text border border-dark mx-2 my-2">
+      <a class="card-title" style="font-size:25px" href="{% url 'post_new' story.pk %}">{{story.story_name}}</a>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
