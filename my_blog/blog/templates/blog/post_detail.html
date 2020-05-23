@@ -45,13 +45,11 @@
 
   <br><br>
 
-  <p>
-    <button class="btn btn-primary w-100" type="button" style="background: #e5e7e8; border: 0px; color:black;height:50px" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  <div class="comment-panel my-5">
+    <button class="btn btn-primary w-100" type="button" style="background: #e5e7e8; border: 0px; color:black;height:50px">
       Comment Panel
     </button>
-  </p>
-
-    <div class=" collapse panel-body p-3" id="collapseExample" style="border: 2px solid #e5e7e8">
+    <div class="panel-body p-3"  style="border: 2px solid #e5e7e8">
       <form action="{% url 'add_comment_to_post' post.pk %}" method="post">
         {% csrf_token %}
         <div class="input-group mb-3">
