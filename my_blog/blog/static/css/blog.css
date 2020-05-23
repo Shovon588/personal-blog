@@ -6,13 +6,23 @@
 
 .posttitle {
   font-family: 'Russo One', sans-serif;
+<<<<<<< HEAD
   font-size: 2em;
+=======
+  font-size: 1.6em;
+>>>>>>> 79cb27ee9ba12d8f089d881c6dfb74174832188a
   text-align: center;
 }
 
 .postcontent {
   font-family: 'Montserrat Alternates';
-  font-size: 1.3em;
+  font-size: 1.2em;
+}
+
+h1, h3, h4{
+  font-family: 'Russo One', sans-serif;
+  font-size: 2em;
+  text-align: center;
 }
 
 .big-brand{
@@ -21,7 +31,7 @@
 
 .editable{
   text-align: justify;
-  font-size: 1.5em;
+  font-size: 1.3em;
   min-height: 50px;
   width: 100%;
   padding: 8px;

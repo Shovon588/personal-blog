@@ -9,7 +9,7 @@ from django.views.generic import TemplateView, ListView, DetailView,\
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Post, Comment, About
+from .models import Post, Comment, About, Story
 
 # Create your views here.
 
@@ -33,24 +33,18 @@ class PostDetailView(DetailView):
 
 
 @login_required
-def create_post(request):
-    author = request.user
+def create_post(request, pk):
+    story = Story.objects.get(pk=pk)
     if request.method=='POST':
         title = request.POST['title']
         text = request.POST['text']
 
-        post = Post(author=author, title=title, text=text)
+        post = Post(story=story, title=title, text=text)
         post.save()
-        return redirect('post_draft_list')
+        return redirect('story_parts', pk=pk)
 
-    return render(request, 'blog/post_form.html')
-
-
-# class CreatePostView(LoginRequiredMixin, CreateView):
-#     login_url = '/login/'
-#     redirect_field_name = 'blog/post_detail.html'
-#     form_class = PostForm
-#     model = Post
+    return render(request, 'blog/post_form.html', context={'story_name': story.story_name,
+                                                           'pk': pk})
 
 
 @login_required
@@ -68,11 +62,59 @@ def post_update_view(request, pk):
     return render(request, 'blog/post_edit.html', context={'post':post})
 
 
-# class PostUpdateView(LoginRequiredMixin, UpdateView):
-#     login_url = '/login/'
-#     redirect_field_name = 'blog/post_detail.html'
-#     form_class = PostForm
-#     model = Post
+# =====================Story=============================
+class StoryListView(ListView):
+    model = Story
+    context_object_name = 'stories'
+
+
+def story_part_list_view(request, pk):
+    story = Story.objects.get(pk=pk)
+    story_parts = Post.objects.filter(story=story).order_by('-create_date')
+    story_name = story.story_name
+
+    return render(request, 'blog/story_part_list.html', context={'story_parts':story_parts,
+                                                                 'story_name': story_name,
+                                                                 'pk':pk})
+
+@login_required
+def create_new_story(request):
+    author = request.user
+    if request.method=='POST':
+        story_name = request.POST['name']
+        story_trailer = ''
+        if request.POST['trailer']:
+            story_trailer = request.POST['trailer']
+
+        story = Story(author=author, story_name=story_name, story_trailer=story_trailer)
+
+        story.save()
+
+        return redirect('story_parts', pk=story.pk)
+
+    return render(request, 'blog/new_story_form.html')
+
+
+class StoryDeleteView(LoginRequiredMixin, DeleteView):
+    model = Story
+    success_url = reverse_lazy('stories')
+
+
+@login_required
+def story_update_view(request, pk):
+    story = get_object_or_404(Story, pk=pk)
+    if request.method=='POST':
+        story_name = request.POST['name']
+        story_trailer = request.POST['trailer']
+        story.story_name = story_name
+        story.story_trailer = story_trailer
+        story.save()
+        messages.success(request, message="Successfully updated!")
+        return redirect('story_parts', pk=pk)
+
+    return render(request, 'blog/story_edit.html', context={'story':story})
+
+# =====================End Story=============================
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
@@ -81,9 +123,10 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
 
 def draft_list_view(request):
-    posts = Post.objects.filter(published_date__isnull=True).order_by('create_date')
+    posts = Post.objects.filter(published_date__isnull=True).order_by('-create_date')
 
     return render(request, 'blog/draft_list.html', context={'posts': posts})
+
 
 @login_required
 def draft_detail_view(request, pk):

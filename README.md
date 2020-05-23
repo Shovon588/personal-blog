@@ -1,6 +1,6 @@
 # Project name: Words With Meraki 
-# Project type: Personal blog
-# Functionality:
+## Project type: Company blog
+## Functionality:
 1. The author can write/edit/delete a blog.
 2. The author can approve/remove a comment. 
 3. The readers can read blogs without having an account. 

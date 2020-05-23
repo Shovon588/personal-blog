@@ -36,6 +36,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav navbar-center" style="font-size:20px">
             <a class="nav-item nav-link active" href="{% url 'about' %}">About</a>
+            <a class="nav-item nav-link active" href="{% url 'stories' %}">Stories</a>
 
             {% if user.is_authenticated %}
               <li class="nav-item dropdown">
@@ -43,7 +44,7 @@
                 {{user.username}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="nav-item nav-link active" href="{% url 'post_new' %}">New Post</a>
+                  <a class="nav-item nav-link active" href="{% url 'stories' %}">New Post</a>
                   <a class="nav-item nav-link active" href="{% url 'post_draft_list' %}">Drafts</a>
                   <div class="dropdown-divider"></div>
                   <a class="nav-item nav-link active" href="{% url 'instructions' %}">Instructios</a>
