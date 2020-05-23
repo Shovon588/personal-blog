@@ -36,7 +36,6 @@ class Post(models.Model):
         return self.title
 
 
-
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
     author = models.CharField(max_length=150)
@@ -60,3 +59,12 @@ class About(models.Model):
 
     def __str__(self):
         return self.about
+
+
+class ReaderInfo(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='readerinfos')
+    user_ip = models.CharField(max_length=100, unique=False)
+    read_time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return "%s at %s" %(self.user_ip, self.read_time)
