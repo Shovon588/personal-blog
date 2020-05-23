@@ -9,7 +9,7 @@ from django.views.generic import TemplateView, ListView, DetailView,\
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Post, Comment, About, Story
+from .models import Post, Comment, About, Story, ReaderInfo
 
 # Create your views here.
 
@@ -28,8 +28,19 @@ class PostListView(ListView):
         return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 
 
-class PostDetailView(DetailView):
-    model = Post
+def post_detail_view(request, pk):
+    post = Post.objects.get(pk=pk)
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    readerinfo = ReaderInfo(post=post,user_ip=ip)
+    readerinfo.save()
+
+    return render(request, 'blog/post_detail.html', context={'post':post})
 
 
 @login_required
@@ -71,11 +82,9 @@ class StoryListView(ListView):
 def story_part_list_view(request, pk):
     story = Story.objects.get(pk=pk)
     story_parts = Post.objects.filter(story=story).order_by('-create_date')
-    story_name = story.story_name
 
     return render(request, 'blog/story_part_list.html', context={'story_parts':story_parts,
-                                                                 'story_name': story_name,
-                                                                 'pk':pk})
+                                                                 'story': story})
 
 @login_required
 def create_new_story(request):
