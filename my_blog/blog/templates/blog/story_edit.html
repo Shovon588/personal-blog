@@ -13,7 +13,7 @@
     </div>
     <input type="text" class="form-control posttitle" style="min-height: 50px;" name='name' value="{{story.story_name}}" required>
   </div>
-  <textarea class="editable postcontent"  rows="10" name='trailer' required placeholder="Write something about your story here...">{{story.story_trailer|safe|linebreaksbr}}</textarea>
+  <textarea class="editable postcontent"  rows="10" name='trailer' placeholder="Write something about your story here...">{{story.story_trailer|safe|linebreaksbr}}</textarea>
 
   <input type="submit" class="btn btn-primary float-right mt-3 mb-5" value="Edit">
 </form>
