@@ -24,7 +24,7 @@ TEMP_DIR = os.path.join(BASE_DIR, 'blog/templates/blog')
 SECRET_KEY = '_+&-p@_c9y68-p!al==rv+ylfsg7qgwq9z@$=d0+!jx-g%!((q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['wordswithmeraki.pythonanywhere.com']
 

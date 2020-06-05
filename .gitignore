@@ -8,3 +8,5 @@ my_blog/blog/__pycache__/
 my_blog/my_blog/__pycache__/
 
 *.pyc
+
+my_blog/db.sqlite3
