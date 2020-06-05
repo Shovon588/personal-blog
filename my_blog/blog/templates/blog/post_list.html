@@ -19,6 +19,9 @@
       </div>
       <div class="card-body" style="font-size: 17px">
         <p class="text-justify postcontent">{{post.text|safe|linebreaksbr|truncatechars:160}}</p>
+        <span class="float-right">
+          <a class="text-success" href="{% url 'post_detail' post.pk %}">Read More...</a>
+        </span>
       </div>
       <div class="card-footer date">
         <p class="text-muted">Posted: {{post.published_date|date:'d-M, Y'}} (<span class="text-success">{{ post.readerinfos.count }} view{{ post.readerinfos.count|pluralize }}</span>)
