@@ -12,5 +12,3 @@ my_blog/my_blog/__pycache__/
 my_blog/db.sqlite3
 
 my_blog/blog/migrations/
-
-my_blog/my_blog/
