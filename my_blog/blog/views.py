@@ -22,15 +22,18 @@ class AboutDetailView(ListView):
         return About.objects.all()
 
 
-class PostListView(ListView):
+def post_list_view(request):
     """
     This view returns to a page where the list of all the posts are available.
     We can think this as the home page. The posts are available in descending time order.
     """
-    model = Post
-
-    def get_queryset(self):
-        return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    post_list = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    comments = len(Comment.objects.filter(approved_comment=False).order_by('-created_date'))
+    if comments>0:
+        return render(request, 'blog/post_list.html', context={'post_list': post_list,
+                                                               'comments': comments})
+    else:
+        return render(request, 'blog/post_list.html', context={'post_list': post_list})
 
 
 def post_detail_view(request, pk):
@@ -237,3 +240,10 @@ def comment_remove(request, pk):
     comment.delete()
     messages.success(request, message="Comment removed!")
     return redirect('post_detail', pk=post_pk)
+
+
+@login_required
+def notifications(request):
+    comments = Comment.objects.filter(approved_comment=False).order_by('-created_date')
+    print(comments[0].author)
+    return render(request, 'blog/notifications.html', context={'comments': comments})

@@ -44,10 +44,13 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="nav-item nav-link active" href="{% url 'stories' %}">New Post</a>
                   <a class="nav-item nav-link active" href="{% url 'post_draft_list' %}">Drafts</a>
+                  <a class="nav-item nav-link active" href="{% url 'notifications' %}">Notifications</a>
+
+
                   <div class="dropdown-divider"></div>
-                  <a class="nav-item nav-link active" href="{% url 'instructions' %}">Instructios</a>
-                  <a class="nav-item nav-link active" href="{% url 'admin:index' %}">Admin</a>
-                  <a class="nav-item nav-link active" href="{% url 'logout' %}">Log out</a>
+                    <a class="nav-item nav-link active" href="{% url 'instructions' %}">Instructios</a>
+                    <a class="nav-item nav-link active" href="{% url 'admin:index' %}">Admin</a>
+                    <a class="nav-item nav-link active" href="{% url 'logout' %}">Log out</a>
                 </div>
               </li>
             {% else %}
