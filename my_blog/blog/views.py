@@ -15,20 +15,33 @@ from .models import Post, Comment, About, Story, ReaderInfo
 
 
 class AboutDetailView(ListView):
+    """A view that contains some information about the blog or the author or the organization"""
     model = About
 
     def get_queryset(self):
         return About.objects.all()
 
 
-class PostListView(ListView):
-    model = Post
-
-    def get_queryset(self):
-        return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+def post_list_view(request):
+    """
+    This view returns to a page where the list of all the posts are available.
+    We can think this as the home page. The posts are available in descending time order.
+    """
+    post_list = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    comments = len(Comment.objects.filter(approved_comment=False).order_by('-created_date'))
+    if comments>0:
+        return render(request, 'blog/post_list.html', context={'post_list': post_list,
+                                                               'comments': comments})
+    else:
+        return render(request, 'blog/post_list.html', context={'post_list': post_list})
 
 
 def post_detail_view(request, pk):
+    """
+    Upon clicking on a post this view will take to a page where all the detail about that
+    post is available. One will read a post from this view. Also the reader info about that
+    particular post will be added from here.
+    """
     post = Post.objects.get(pk=pk)
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
 
@@ -45,6 +58,9 @@ def post_detail_view(request, pk):
 
 @login_required
 def create_post(request, pk):
+    """
+    This view creates a new post and add a new entry to Post model.
+    """
     story = Story.objects.get(pk=pk)
     if request.method=='POST':
         title = request.POST['title']
@@ -60,6 +76,9 @@ def create_post(request, pk):
 
 @login_required
 def post_update_view(request, pk):
+    """
+    This model updates a particular post and save the update in the Post model.
+    """
     post = get_object_or_404(Post, pk=pk)
     if request.method=='POST':
         title = request.POST['title']
@@ -75,11 +94,18 @@ def post_update_view(request, pk):
 
 # =====================Story=============================
 class StoryListView(ListView):
+    """
+    Shows the list of all the stories.
+    """
     model = Story
     context_object_name = 'stories'
 
 
 def story_part_list_view(request, pk):
+    """
+    Shows the list of all the entries of a particular story. Or we can say the list of
+    all the episodes in a story.
+    """
     story = Story.objects.get(pk=pk)
     story_parts = Post.objects.filter(story=story).order_by('-create_date')
 
@@ -88,6 +114,9 @@ def story_part_list_view(request, pk):
 
 @login_required
 def create_new_story(request):
+    """
+    This view creates a new story and create a new entry to Story model.
+    """
     author = request.user
     if request.method=='POST':
         story_name = request.POST['name']
@@ -105,12 +134,18 @@ def create_new_story(request):
 
 
 class StoryDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    This view deletes a story from the database.
+    """
     model = Story
     success_url = reverse_lazy('stories')
 
 
 @login_required
 def story_update_view(request, pk):
+    """
+    This view updates any information about a particular story such as story name/story trailer.
+    """
     story = get_object_or_404(Story, pk=pk)
     if request.method=='POST':
         story_name = request.POST['name']
@@ -127,11 +162,17 @@ def story_update_view(request, pk):
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    Deletes a post from the database.
+    """
     model = Post
     success_url = reverse_lazy('post_list')
 
 
 def draft_list_view(request):
+    """
+    Shows the list of all the yet to be published post.
+    """
     posts = Post.objects.filter(published_date__isnull=True).order_by('-create_date')
 
     return render(request, 'blog/draft_list.html', context={'posts': posts})
@@ -139,6 +180,9 @@ def draft_list_view(request):
 
 @login_required
 def draft_detail_view(request, pk):
+    """
+    Shows detail about a particular yet to be published post.
+    """
     post = Post.objects.filter(pk=pk)[0]
     return render(request, 'blog/draft_detail.html', context={'post':post})
 
@@ -153,12 +197,18 @@ class InstructionsView(TemplateView):
 
 @login_required
 def post_publish(request, pk):
+    """
+    This view publish a particular post from yet to be published list.
+    """
     post = get_object_or_404(Post, pk=pk)
     post.publish()
     return redirect('post_detail', pk=pk)
 
 
 def add_comment_to_post(request, pk):
+    """
+    The view creates a new entry upon adding a comment to a post.
+    """
     post = get_object_or_404(Post, pk=pk)
     if request.method=='POST':
         author = request.POST['author']
@@ -171,6 +221,9 @@ def add_comment_to_post(request, pk):
 
 @login_required
 def comment_approve(request, pk):
+    """
+    This view approve a comment upon author's approval.
+    """
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
     messages.success(request, message="Comment approved!")
@@ -179,8 +232,18 @@ def comment_approve(request, pk):
 
 @login_required
 def comment_remove(request, pk):
+    """
+    This views removes a comment upon author's removal.
+    """
     comment = get_object_or_404(Comment, pk=pk)
     post_pk = comment.post.pk
     comment.delete()
     messages.success(request, message="Comment removed!")
     return redirect('post_detail', pk=post_pk)
+
+
+@login_required
+def notifications(request):
+    comments = Comment.objects.filter(approved_comment=False).order_by('-created_date')
+    print(comments[0].author)
+    return render(request, 'blog/notifications.html', context={'comments': comments})

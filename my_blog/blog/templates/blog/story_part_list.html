@@ -28,6 +28,7 @@
   <a class="float-right btn btn-danger" href="{% url 'delete_story' story.pk %}"><span class="fas fa-trash"></span></a>
 {% endif %}
 <br>
+<hr class="mt-5" style="border-top: 2px solid black">
 
 <div class="centerstage">
   {% if story_parts %}
@@ -45,14 +46,14 @@
           </div>
           <div class="card-footer date">
             {% if post.published_date %}
-              <p class="text-muted">Posted: {{post.published_date|date:'d-M, Y'}}, Author: {{post.story.author}}
+              <p class="text-muted">Posted: {{post.published_date|date:'d-M, Y'}}
             {% else %}
-              <p class="text-muted">Created: {{post.create_date|date:'d-M, Y'}}, Author: {{post.story.author}}
+              <p class="text-muted">Created: {{post.create_date|date:'d-M, Y'}}
             {% endif %}
 
               {% if post.comments.all %}
               <span class="float-right">
-                <a href="{% url 'post_detail' post.pk %}">{{ post.comments.count }} comments</a>
+                <a href="{% url 'post_detail' post.pk %}">{{ post.comments.count }} comment{{post.comments.count|pluralize}}</a>
               </span>
               {% endif %}
             </p>
@@ -68,10 +69,10 @@
             <p class="text-justify postcontent">{{post.text|safe|linebreaksbr|truncatechars:160}}</p>
           </div>
           <div class="card-footer date">
-            <p class="text-muted">Created: {{post.create_date|date:'d-M, Y'}}, Author: {{post.story.author}}
+            <p class="text-muted">Published: {{post.published_date|date:'d-M, Y'}}
               {% if post.comments.all %}
               <span class="float-right">
-                <a href="{% url 'post_detail' post.pk %}">{{ post.comments.count }} comments</a>
+                <a href="{% url 'post_detail' post.pk %}">{{ post.comments.count }} comment{{post.comments.count|pluralize}}</a>
               </span>
               {% endif %}
             </p>

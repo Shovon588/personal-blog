@@ -10,6 +10,17 @@
   {% endfor %}
 {% endif %}
 
+{% if user.is_authenticated %}
+  {% if comments %}
+  <div class="alert alert-success alert-dismissible text-center fade show" role="alert">
+    You have stuffs to take care. Go to <strong><a href="{% url 'notifications' %}">Notifications.</a></strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %}
+{% endif %}
+
 <div class="centerstage">
   {% for post in post_list %}
     <div class="card my-5">
@@ -19,6 +30,9 @@
       </div>
       <div class="card-body" style="font-size: 17px">
         <p class="text-justify postcontent">{{post.text|safe|linebreaksbr|truncatechars:160}}</p>
+        <span class="float-right">
+          <a class="text-success" href="{% url 'post_detail' post.pk %}">Read More...</a>
+        </span>
       </div>
       <div class="card-footer date">
         <p class="text-muted">Posted: {{post.published_date|date:'d-M, Y'}} (<span class="text-success">{{ post.readerinfos.count }} view{{ post.readerinfos.count|pluralize }}</span>)
