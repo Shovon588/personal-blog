@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from django.views.generic import TemplateView, ListView, DetailView,\
     CreateView, UpdateView, DeleteView
@@ -28,12 +29,17 @@ def post_list_view(request):
     We can think this as the home page. The posts are available in descending time order.
     """
     post_list = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    paginator = Paginator(post_list, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     comments = len(Comment.objects.filter(approved_comment=False).order_by('-created_date'))
-    if comments>0:
-        return render(request, 'blog/post_list.html', context={'post_list': post_list,
-                                                               'comments': comments})
+
+    if comments > 0:
+        return render(request, 'blog/post_list.html', context={'comments': comments, 'page_obj': page_obj})
     else:
-        return render(request, 'blog/post_list.html', context={'post_list': post_list})
+
+        return render(request, 'blog/post_list.html', context={'page_obj': page_obj})
 
 
 def post_detail_view(request, pk):
